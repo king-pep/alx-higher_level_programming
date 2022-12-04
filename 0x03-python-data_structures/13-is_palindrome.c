@@ -26,29 +26,14 @@ size_t list_len(listint_t *h)
 *
 * Return: 1 if palindrome, 0 otherwise.
 */
-int is_palindrome(listint_t **head)
+size_t list_len(const listint_t *h)
 {
-	int *nArr, i = 0, j = 0, len = 0;
-	listint_t *temp;
+    size_t i = 0;
 
-	if (*head == NULL)
-		return (1);
-	temp = *head;
-	len = list_len(temp);
-	nArr = (int *)malloc(sizeof(int) * len);
-	if (nArr == NULL)
-		return (2);
-	temp = *head;
-	while (temp != NULL)
-	{
-		nArr[j] = temp->n;
-		j++;
-		temp = temp->next;
-	}
-	for (i = 0, j = len - 1; i < j; i++, j--)
-	{
-		if (nArr[i] != nArr[j])
-			return (0);
-	}
-	return (1);
+    while (h)
+    {
+        i++;
+        h = h->next;
+    }
+    return (i);
 }
