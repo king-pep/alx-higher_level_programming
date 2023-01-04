@@ -2,49 +2,48 @@
 import sys
 
 
-def nqueens(n):
-    if n < 4:
+def nqueens(p):
+    if p < 4:
         print("N must be at least 4")
-        sys.exit(1)
-    if type(n) != int:
-        print("N must be a number")
-        sys.exit(1)
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        sys.exit(1)
-    board = []
-    for i in range(n):
-        board.append([])
-        for j in range(n):
-            board[i].append(0)
-    solve(board, 0, n)
+        exit(1)
+    board = [[0 for i in range(p)] for j in range(p)]
+    solve(board, 0, p)
+    return board
 
 
-def solve(board, col, n):
-    if col >= n:
+def solve(board, col, p):
+    if col >= p:
         print(board)
         return True
-    res = False
-    for i in range(n):
-        if is_safe(board, i, col, n):
+    for i in range(p):
+        if isSafe(board, i, col, p):
             board[i][col] = 1
-            res = solve(board, col + 1, n) or res
+            if solve(board, col + 1, p):
+                return True
             board[i][col] = 0
-    return res
+    return False
 
 
-def is_safe(board, row, col, n):
+def isSafe(board, row, col, p):
     for i in range(col):
         if board[row][i] == 1:
             return False
     for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
         if board[i][j] == 1:
             return False
-    for i, j in zip(range(row, n, 1), range(col, -1, -1)):
+    for i, j in zip(range(row, p, 1), range(col, -1, -1)):
         if board[i][j] == 1:
             return False
     return True
 
 
 if __name__ == "__main__":
-    nqueens(int(sys.argv[1]))
+    if len(sys.argv) != 2:
+        print("Usage: nqueens N")
+        exit(1)
+    try:
+        n = int(sys.argv[1])
+    except:
+        print("N must be a number")
+        exit(1)
+    nqueens(n)
