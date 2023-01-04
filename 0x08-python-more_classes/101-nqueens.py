@@ -1,24 +1,5 @@
 #!/usr/bin/python3
-import sys
-
-
-def nqueens(p):
-    if p < 4:
-        print("N must be at least 4")
-        exit(1)
-    board = [[0 for i in range(p)] for j in range(p)]
-    solve(board, 0, p)
-    return board
-
-
-def solve(board, col, p):
-    if col >= p:
-        print(board)
-        return True
-    for i in range(p):
-        if isSafe(board, i, col, p):
-            board[i][col] = 1
-            if solve(board, col + 1, p):
+ if solve(board, col + 1, p):
                 return True
             board[i][col] = 0
     return False
